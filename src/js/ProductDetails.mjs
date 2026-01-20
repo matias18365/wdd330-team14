@@ -1,4 +1,4 @@
-import { setLocalStorage, getLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, updateCartCount } from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -17,6 +17,9 @@ export default class ProductDetails {
 
     this.renderProductDetails();
 
+    // Initialize the count when the page loads
+    updateCartCount();
+
     document
       .getElementById("addToCart")
       .addEventListener("click", this.addToCart.bind(this));
@@ -27,10 +30,12 @@ export default class ProductDetails {
       console.error("Producto inválido, no se agregó al carrito");
       return;
     }
+    
 
     const cart = getLocalStorage("so-cart") || [];
     cart.push(this.product);
     setLocalStorage("so-cart", cart);
+    updateCartCount(); //Number of Items in Backpag Icon (Cart)
   }
 
   renderProductDetails() {

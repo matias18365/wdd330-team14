@@ -47,3 +47,17 @@ export function renderListWithTemplate(
   );
 }
 
+// ItemsAmountInCart Individual Task
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  const badge = document.querySelector(".item-count-badge");
+  
+  if (badge) {
+    const count = cartItems.length;
+    badge.textContent = count;
+    
+    // If count is 0 hide it. If more than 0 then show it
+    badge.style.display = count > 0 ? "block" : "none";
+  }
+}
+

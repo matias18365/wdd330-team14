@@ -131,6 +131,21 @@ button {
   fill: gray;
 }
 
+/* Backpack icon with item count styles */
+.item-count-badge {
+  position: absolute;
+  top: 13px;
+  right: -6px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  padding: 1px 4px;
+  border-radius: 50%;
+  z-index: 10;
+  display: none; /* Display nothing if cart is empty*/
+}
+/* End Backpack icon with item count styles */
+
 /* End cart icon styles */
 
 .mission {
