@@ -53,11 +53,10 @@ export function updateCartCount() {
   const badge = document.querySelector(".item-count-badge");
   
   if (badge) {
-    const count = cartItems.length;
+    const count = cartItems.reduce((sum, item) => sum + (item.qty || 1), 0);
     badge.textContent = count;
     
     // If count is 0 hide it. If more than 0 then show it
     badge.style.display = count > 0 ? "block" : "none";
   }
 }
-
