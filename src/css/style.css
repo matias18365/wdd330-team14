@@ -131,6 +131,21 @@ button {
   fill: gray;
 }
 
+/* Backpack icon with item count styles */
+.item-count-badge {
+  position: absolute;
+  top: 13px;
+  right: -6px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  padding: 1px 4px;
+  border-radius: 50%;
+  z-index: 10;
+  display: none; /* Display nothing if cart is empty*/
+}
+/* End Backpack icon with item count styles */
+
 /* End cart icon styles */
 
 .mission {
@@ -239,6 +254,12 @@ button {
 .cart-card__price {
   grid-row: 2;
   grid-column: 3;
+}
+.product__discount {
+  margin-top: 0.5rem;
+  color: #b12704;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 @media screen and (min-width: 500px) {
