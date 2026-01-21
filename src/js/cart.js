@@ -1,60 +1,53 @@
-import { getLocalStorage, setLocalStorage ,updateCartCount} from "./utils.mjs";
+import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
-  const productList = document.querySelector(".product-list");
 
+  // Handle empty cart
   if (cartItems.length === 0) {
-    productList.innerHTML = "<p>El carrito está vacío</p>";
+    document.querySelector(".product-list").innerHTML =
+      "<p>Your cart is empty.</p>";
+    updateSubtotal([]);
     return;
   }
 
-  productList.innerHTML = cartItems
-    .map((item) => cartItemTemplate(item))
-    .join("");
+  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+  document.querySelector(".product-list").innerHTML = htmlItems.join("");
 
-  addRemoveListeners();
+  updateSubtotal(cartItems);
 }
 
 function cartItemTemplate(item) {
+  const price = item.FinalPrice ?? item.Price;
+
   return `
-  <li class="cart-card divider">
-    <span class="remove-item" data-id="${item.Id}">X</span>
-
-    <a href="#" class="cart-card__image">
-      <img src="${item.Image}" alt="${item.Name}" />
-    </a>
-
-    <a href="#">
-      <h2 class="card__name">${item.Name}</h2>
-    </a>
-
-    <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-    <p class="cart-card__quantity">qty: 1</p>
-    <p class="cart-card__price">$${item.FinalPrice}</p>
-  </li>`;
+    <li class="cart-card divider">
+      <a href="#" class="cart-card__image">
+        <img src="${item.Image}" alt="${item.Name}" />
+      </a>
+      <a href="#">
+        <h2 class="card__name">${item.Name}</h2>
+      </a>
+      <p class="cart-card__color">${item.Colors[0].ColorName}</p>
+      <p class="cart-card__quantity">qty: 1</p>
+      <p class="cart-card__price">$${price.toFixed(2)}</p>
+    </li>
+  `;
 }
 
-function addRemoveListeners() {
-  const removeButtons = document.querySelectorAll(".remove-item");
-
-  removeButtons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const id = e.target.dataset.id;
-      removeItemFromCart(id);
-    });
-  });
+function calculateCartSubtotal(cartItems) {
+  return cartItems.reduce((total, item) => {
+    const price = item.FinalPrice ?? item.Price;
+    return total + price;
+  }, 0);
 }
 
-function removeItemFromCart(id) {
-  let cart = getLocalStorage("so-cart") || [];
+function updateSubtotal(cartItems) {
+  const subtotalElement = document.querySelector("#cartSubtotal");
+  if (!subtotalElement) return;
 
-  cart = cart.filter((item) => item.Id !== id);
-
-  setLocalStorage("so-cart", cart);
-  renderCartContents();
+  const subtotal = calculateCartSubtotal(cartItems);
+  subtotalElement.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
 }
 
 renderCartContents();
-
-updateCartCount();
