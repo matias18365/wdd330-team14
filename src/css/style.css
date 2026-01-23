@@ -191,6 +191,31 @@ button {
   font-size: 1em;
 }
 
+/* Category list styles */
+.category-list {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.category-list .product-card {
+  border: none;
+  text-align: center;
+  flex: 0 1 auto;
+  max-width: 150px;
+}
+
+.category-list .product-card img {
+  width: 100px;
+  height: 100px;
+}
+
+.category-list .product-card h3 {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-top: 0.5rem;
+}
+
 /* End product list card */
 
 .product-detail {
