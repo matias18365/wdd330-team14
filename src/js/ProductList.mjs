@@ -1,5 +1,5 @@
-import { renderListWithTemplate } from './utils.mjs';
 
+import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
   return `
@@ -10,8 +10,16 @@ function productCardTemplate(product) {
         <h3>${product.Name}</h3>
         <p class="product-card__price">$${product.FinalPrice}</p>
       </a>
+
+      <button
+        class="quick-view"
+        data-id="${product.Id}"
+        type="button"
+      >
+        Quick View
+      </button>
     </li>
-    `;
+  `;
 }
 
 export default class ProductList {
@@ -23,7 +31,9 @@ export default class ProductList {
 
   async init() {
     const products = await this.dataSource.getData();
-    console.log('Productos desde ProductList:', products);
+
+    console.log("Productos desde ProductList:", products);
+
     this.renderList(products);
   }
 
@@ -35,4 +45,3 @@ export default class ProductList {
     );
   }
 }
-
