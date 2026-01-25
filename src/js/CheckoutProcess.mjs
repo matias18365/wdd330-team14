@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 // takes a form element and returns an object where the key is the "name" of the form input.
@@ -110,8 +110,29 @@ export default class CheckoutProcess {
       tax: this.tax.toFixed(2),
     };
 
-    // call the checkout method in the ExternalServices module
-    const response = await this.externalServices.checkout(order);
-    return response;
+    try {
+      // call the checkout method in the ExternalServices module
+      const response = await this.externalServices.checkout(order);
+      return response;
+    } catch (err) {
+      // Handle errors from the server
+      if (err.name === "servicesError") {
+        // Display error messages from the server
+        const messages = err.message;
+        if (typeof messages === "object" && messages.message) {
+          // Single error message
+          alertMessage(messages.message);
+        } else if (Array.isArray(messages)) {
+          // Multiple error messages
+          messages.forEach((msg) => alertMessage(msg, false));
+          window.scrollTo(0, 0);
+        } else {
+          alertMessage("An error occurred during checkout.");
+        }
+      } else {
+        alertMessage("An error occurred during checkout.");
+      }
+      throw err; // Re-throw to let the calling code know it failed
+    }
   }
 }

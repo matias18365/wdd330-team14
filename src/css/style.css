@@ -357,6 +357,56 @@ button {
   margin-top: 0.5rem;
 }
 
+/* Alert message styles */
+.alert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 1rem;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-left: 4px solid #dc3545;
+  color: #721c24;
+}
+
+.alert p {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.alert-close {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0 0.5rem;
+  margin-left: 1rem;
+}
+
+.alert-close:hover {
+  color: #000;
+}
+
+/* Success message styles */
+.success-message {
+  text-align: center;
+  padding: 2rem;
+}
+
+.success-message h2 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.success-message p {
+  margin-bottom: 1rem;
+}
+
+.success-message .checkout-btn {
+  display: inline-block;
+  margin-top: 1rem;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
