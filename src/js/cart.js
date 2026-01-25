@@ -5,14 +5,20 @@ loadHeaderFooter();
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const productList = document.querySelector(".product-list");
+  const cartFooter = document.querySelector(".cart-footer");
 
   // Check if cartItems exists and is an array with items
   if (cartItems && Array.isArray(cartItems) && cartItems.length > 0) {
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     productList.innerHTML = htmlItems.join("");
+    // Calculate and display total
+    const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+    document.getElementById("cart-total").textContent = `$${total.toFixed(2)}`;
+    cartFooter.classList.remove("hide");
   } else {
     // Display message when cart is empty
     productList.innerHTML = "<p>Your cart is empty.</p>";
+    cartFooter.classList.add("hide");
   }
 }
 
