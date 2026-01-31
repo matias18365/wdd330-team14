@@ -22,14 +22,26 @@ function renderCartContents() {
   }
 }
 
+function cartImageAttrs(item) {
+  const img = item.Images || {};
+  const small = img.PrimarySmall;
+  const medium = img.PrimaryMedium;
+  const large = img.PrimaryLarge;
+  const fallbackSrc = medium || large || item.Image;
+
+  if (small && medium && large) {
+    return `src="${medium}" srcset="${small} 80w, ${medium} 160w, ${large} 320w" sizes="(max-width: 480px) 80px, 120px"`;
+  }
+  return `src="${fallbackSrc}"`;
+}
+
 function cartItemTemplate(item) {
-  // Handle both old (Image) and new (Images.PrimaryMedium) data structures
-  const imageSrc = item.Images ? item.Images.PrimaryMedium : item.Image;
+  const imgAttrs = cartImageAttrs(item);
 
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
-      src="${imageSrc}"
+      ${imgAttrs}
       alt="${item.Name}"
     />
   </a>

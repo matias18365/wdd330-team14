@@ -29,8 +29,24 @@ export default class ProductDetails {
       this.product.Brand.Name;
     document.querySelector("#productNameWithoutBrand").textContent =
       this.product.NameWithoutBrand;
-    document.querySelector("#productImage").src = this.product.Images.PrimaryLarge;
-    document.querySelector("#productImage").alt = this.product.Name;
+
+    const imgEl = document.querySelector("#productImage");
+    const img = this.product.Images || {};
+    const small = img.PrimarySmall;
+    const medium = img.PrimaryMedium;
+    const large = img.PrimaryLarge;
+    const fallbackSrc = large || medium || this.product.Image;
+
+    imgEl.src = fallbackSrc;
+    imgEl.alt = this.product.Name;
+    if (small && medium && large) {
+      imgEl.srcset = `${small} 80w, ${medium} 160w, ${large} 320w`;
+      imgEl.sizes = "(max-width: 600px) 100vw, 500px";
+    } else {
+      imgEl.removeAttribute("srcset");
+      imgEl.removeAttribute("sizes");
+    }
+
     document.querySelector("#productFinalPrice").textContent =
       "$" + this.product.FinalPrice;
     document.querySelector("#productColorName").textContent =
