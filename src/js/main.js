@@ -1,11 +1,11 @@
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import { updateCartCount } from "./utils.mjs";
 import { renderBreadcrumb } from "./breadcrumb.js";
 
 (async function () {
   const categoryName = "Tents";
-  const dataSource = new ProductData("tents");
+  const dataSource = new ExternalServices("tents");
   const listElement = document.querySelector(".product-list");
 
   const productList = new ProductList("tents", dataSource, listElement);
