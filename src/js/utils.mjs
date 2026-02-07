@@ -61,3 +61,8 @@ export function updateCartCount() {
   }
 }
 
+export async function loadHeaderFooter() {
+  // Por ahora la dejamos vacía para que no de error.
+  // En pasos futuros aquí cargaremos el header.html y footer.html.
+  console.log("loadHeaderFooter ejecutado (esperando lógica futura)");
+}

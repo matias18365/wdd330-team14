@@ -15,9 +15,10 @@ export default class ProductDetails {
       return;
     }
 
+    this.renderBreadcrumb();
+
     this.renderProductDetails();
 
-    // Initialize the count when the page loads
     updateCartCount();
 
     document
@@ -30,25 +31,37 @@ export default class ProductDetails {
       console.error("Producto inválido, no se agregó al carrito");
       return;
     }
-    
 
     const cart = getLocalStorage("so-cart") || [];
     cart.push(this.product);
     setLocalStorage("so-cart", cart);
-    updateCartCount(); //Number of Items in Backpag Icon (Cart)
+    updateCartCount();
+  }
+
+  renderBreadcrumb() {
+    const breadcrumb = document.querySelector(".breadcrumb");
+    if (!breadcrumb) return;
+
+    breadcrumb.textContent = this.product.Category;
+    breadcrumb.classList.remove("hidden");
   }
 
   renderProductDetails() {
     document.querySelector("#productName").textContent =
       this.product.Brand.Name;
+
     document.querySelector("#productNameWithoutBrand").textContent =
       this.product.NameWithoutBrand;
+
     document.querySelector("#productImage").src = this.product.Image;
     document.querySelector("#productImage").alt = this.product.Name;
+
     document.querySelector("#productFinalPrice").textContent =
       `$${this.product.FinalPrice}`;
+
     document.querySelector("#productColorName").textContent =
       this.product.Colors[0].ColorName;
+
     document.querySelector("#productDescriptionHtmlSimple").innerHTML =
       this.product.DescriptionHtmlSimple;
   }
