@@ -11,9 +11,9 @@ function handleRemoveClick(event) {
 
   let cartItems = getLocalStorage("so-cart") || [];
 
-  const index = cartItems.findIndex(item => item.Id === productId);
+  const index = cartItems.findIndex((item) => item.Id === productId);
   if (index > -1) {
-    cartItems.splice(index, 1); 
+    cartItems.splice(index, 1);
   }
 
   setLocalStorage("so-cart", cartItems);

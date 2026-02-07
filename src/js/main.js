@@ -16,18 +16,17 @@ import { renderBreadcrumb } from "./breadcrumb.js";
   const products = await dataSource.getData();
   renderBreadcrumb({
     category: categoryName,
-    count: products.length
+    count: products.length,
   });
 
   document.addEventListener("click", async (e) => {
-    console.log("document clicked", e.target);
 
     const quickViewBtn = e.target.closest(".quick-view");
     if (!quickViewBtn) return;
 
-    console.log("Quick view clicked", quickViewBtn.dataset.id);
-
     const id = quickViewBtn.dataset.id;
+
+
     const product = await dataSource.findProductById(id);
 
     document.getElementById("modalImage").src = product.Image;
@@ -38,14 +37,10 @@ import { renderBreadcrumb } from "./breadcrumb.js";
     document.getElementById("modalDescription").innerHTML =
       product.DescriptionHtmlSimple;
 
-    document
-      .getElementById("quickViewModal")
-      .classList.remove("hidden");
+    document.getElementById("quickViewModal").classList.remove("hidden");
   });
 
   document.getElementById("closeModal")?.addEventListener("click", () => {
-    document
-      .getElementById("quickViewModal")
-      .classList.add("hidden");
+    document.getElementById("quickViewModal").classList.add("hidden");
   });
 })();
