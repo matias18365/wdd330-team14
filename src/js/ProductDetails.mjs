@@ -15,9 +15,10 @@ export default class ProductDetails {
       return;
     }
 
+    this.renderBreadcrumb();
+
     this.renderProductDetails();
 
-    // Initialize the count when the page loads
     updateCartCount();
 
     document
@@ -48,19 +49,31 @@ export default class ProductDetails {
 
     setLocalStorage("so-cart", cart);
     updateCartCount();
+  }
 
+  renderBreadcrumb() {
+    const breadcrumb = document.querySelector(".breadcrumb");
+    if (!breadcrumb) return;
+
+    breadcrumb.textContent = this.product.Category;
+    breadcrumb.classList.remove("hidden");
   }
   renderProductDetails() {
     document.querySelector("#productName").textContent =
       this.product.Brand.Name;
+
     document.querySelector("#productNameWithoutBrand").textContent =
       this.product.NameWithoutBrand;
+
     document.querySelector("#productImage").src = this.product.Image;
     document.querySelector("#productImage").alt = this.product.Name;
+
     document.querySelector("#productFinalPrice").textContent =
       `$${this.product.FinalPrice}`;
+
     document.querySelector("#productColorName").textContent =
       this.product.Colors[0].ColorName;
+
     document.querySelector("#productDescriptionHtmlSimple").innerHTML =
       this.product.DescriptionHtmlSimple;
   }
