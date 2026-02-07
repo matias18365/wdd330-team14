@@ -1,8 +1,5 @@
-import { getLocalStorage } from "./utils.mjs";
-import ExternalServices from "./ExternalServices.mjs";
-
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 const services = new ExternalServices();
-
 
 function formDataToJSON(formElement) {
     const formData = new FormData(formElement),
@@ -11,9 +8,9 @@ function formDataToJSON(formElement) {
         convertedJSON[key] = value;
     });
     return convertedJSON;
-    }
+}
 
-    function packageItems(items) {
+function packageItems(items) {
     return items.map((item) => ({
         id: item.Id,
         price: item.FinalPrice,
@@ -54,9 +51,9 @@ export default class CheckoutProcess {
         this.shipping = (10 + (this.list.length - 1) * 2).toFixed(2);
         
         this.orderTotal = (
-        parseFloat(this.itemTotal) +
-        parseFloat(this.tax) +
-        parseFloat(this.shipping)
+            parseFloat(this.itemTotal) +
+            parseFloat(this.tax) +
+            parseFloat(this.shipping)
         ).toFixed(2);
         
         this.displayOrderTotals();
@@ -74,7 +71,6 @@ export default class CheckoutProcess {
 
     async checkout(form) {
         const json = formDataToJSON(form);
-        
         json.orderDate = new Date();
         json.orderTotal = this.orderTotal;
         json.tax = this.tax;
@@ -86,8 +82,14 @@ export default class CheckoutProcess {
         try {
             const res = await services.checkout(json);
             console.log("Respuesta exitosa:", res);
+            
+            localStorage.removeItem(this.key);
+            
+            location.assign("/checkout/success.html");
+
         } catch (err) {
             console.error("Error en el checkout:", err);
+            alert("Error con su orden: " + JSON.stringify(err.message));
         }
     }
 }

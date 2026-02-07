@@ -296,6 +296,56 @@ button {
   display: none;
 }
 
+.product-colors {
+  margin: 1.5rem 0;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.product__color {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+#productColorName {
+  font-weight: normal;
+  color: #555;
+  margin-left: 5px;
+}
+
+.color-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  gap: 12px;
+  margin: 0;
+}
+
+.color-swatch {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  object-fit: cover;
+  display: block;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+  border-color: #333;
+}
+
+.color-swatch.selected {
+  border-color: #ffd333;
+  outline: 3px solid #ffd333;
+  outline-offset: 2px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
