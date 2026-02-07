@@ -4,12 +4,11 @@ export function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
   const productList = document.querySelector(".product-list");
 
-  if(!productList) return;
+  if (!productList) return;
 
   // Handle empty cart
   if (cartItems.length === 0) {
-    productList.innerHTML =
-      "<p>Your cart is empty.</p>";
+    productList.innerHTML = "<p>Your cart is empty.</p>";
     updateSubtotal([]);
     return;
   }
@@ -30,9 +29,11 @@ function cartItemTemplate(item) {
       </a>
       <a href="#">
         <h2 class="card__name">${item.Name}</h2>
+
       </a>
+      <p>Item Subtotal: $${(price * item.qty).toFixed(2)}</p>
       <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-      <p class="cart-card__quantity">qty: 1</p>
+      <p class="cart-card__quantity">qty: ${item.qty || 1}</p>
       <p class="cart-card__price">$${price.toFixed(2)}</p>
       <span class="remove-item" 
       style="position: absolute;
@@ -49,7 +50,7 @@ function cartItemTemplate(item) {
 function calculateCartSubtotal(cartItems) {
   return cartItems.reduce((total, item) => {
     const price = item.FinalPrice ?? item.Price;
-    return total + price;
+    return total + price * (item.qty || 1);
   }, 0);
 }
 
@@ -64,4 +65,3 @@ function updateSubtotal(cartItems) {
 window.renderCartContents = renderCartContents;
 
 document.addEventListener("DOMContentLoaded", renderCartContents);
-

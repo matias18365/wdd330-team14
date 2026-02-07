@@ -11,7 +11,7 @@ export default class ProductDetails {
     this.product = await this.dataSource.findProductById(this.productId);
 
     if (!this.product) {
-      console.error("Producto no encontrado");
+      console.error("Product not found");
       return;
     }
 
@@ -28,12 +28,25 @@ export default class ProductDetails {
 
   addToCart() {
     if (!this.product || !this.product.Id) {
-      console.error("Producto inválido, no se agregó al carrito");
+      console.error("Invalid product, not added to cart");
+
       return;
     }
 
     const cart = getLocalStorage("so-cart") || [];
-    cart.push(this.product);
+    const cartItem = cart.find((item) => item.Id === this.product.Id);
+
+    if (cartItem) {
+      // If the item is in the cart, increase the quantity
+      cartItem.qty = (cartItem.qty || 1) + 1;
+    } else {
+      // Otherwise add the item to the cart with a quantity of 1
+      cart.push({
+        ...this.product,
+        qty: 1,
+      });
+    }
+
     setLocalStorage("so-cart", cart);
     updateCartCount();
   }
@@ -45,7 +58,6 @@ export default class ProductDetails {
     breadcrumb.textContent = this.product.Category;
     breadcrumb.classList.remove("hidden");
   }
-
   renderProductDetails() {
     document.querySelector("#productName").textContent =
       this.product.Brand.Name;
