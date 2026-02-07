@@ -308,6 +308,55 @@ button {
   display: none;
 }
 
+.product-colors {
+  margin: 1.5rem 0;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+}
+
+.product__color {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+#productColorName {
+  font-weight: normal;
+  color: #555;
+  text-transform: capitalize;
+}
+
+.color-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  gap: 15px;
+  margin: 0;
+}
+
+.color-swatch {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  object-fit: cover;
+  display: block;
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+  border-color: #333;
+}
+
+.color-swatch.selected {
+  border: 2px solid white;
+  outline: 3px solid #ffd333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;

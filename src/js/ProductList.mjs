@@ -1,4 +1,4 @@
-import { renderListWithTemplate } from "./utils.mjs";
+import { renderListWithTemplate, updateCartCount } from "./utils.mjs";
 
 function productCardTemplate(product) {
   // 1. Verificación de imagen con el formato de la API
@@ -37,15 +37,17 @@ export default class ProductList {
       
       console.log("Productos recibidos de la API:", products);
 
-      // 3. Filtrado para mostrar solo productos relevantes (Paso opcional de la tarea)
+      // 3. Filtrado para mostrar solo productos relevantes
       const filteredList = products.filter(p => p.Id !== '989CG' && p.Id !== '880RR');
       
       this.renderList(filteredList);
+
+      // 4. Actualizar el contador del carrito al cargar la lista
+      updateCartCount();
     }
   }
 
   renderList(list) {
-    // 4. Limpiamos y dibujamos la lista
     this.listElement.innerHTML = "";
     
     if (Array.isArray(list) && list.length > 0) {
