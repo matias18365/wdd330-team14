@@ -11,6 +11,29 @@ export function getLocalStorage(key) {
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
+// trigger a quick animation on the cart icon
+export function animateCartIcon() {
+  const cart = document.querySelector(".cart");
+  if (!cart) {
+    return;
+  }
+
+  cart.classList.remove("cart--added");
+  // force a reflow so the animation can restart
+  void cart.offsetWidth;
+  cart.classList.add("cart--added");
+
+  const existingTimer = cart.getAttribute("data-cart-anim");
+  if (existingTimer) {
+    clearTimeout(Number(existingTimer));
+  }
+  const timerId = window.setTimeout(() => {
+    cart.classList.remove("cart--added");
+    cart.removeAttribute("data-cart-anim");
+  }, 700);
+  cart.setAttribute("data-cart-anim", String(timerId));
+}
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
